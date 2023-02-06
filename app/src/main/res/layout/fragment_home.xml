@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.HomeFragment">
+
+    <include
+        android:id="@+id/appbar_home_layout"
+        layout="@layout/app_bar_layout" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/view"
+        app:layout_constraintTop_toBottomOf="@id/appbar_home_layout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/deliver_to"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#3E425E"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                app:layout_constraintTop_toBottomOf="@id/appbar_home_layout">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:src="@drawable/baseline_location_on_24" />
+
+                <TextView
+                    style="@style/ShapeAppearance.Material3.Corner.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="Deliver to sahil - Nagpur 440002"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/item_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/deliver_to"
+                tools:listitem="@layout/items_recycler_view" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="#5C777575" />
+
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:layout_constraintTop_toBottomOf="@id/item_recycler_view" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="#5C777575" />
+
+            <TextView
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Deal of the Day"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/deal_of_the_day_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                tools:listitem="@layout/deal_of_the_day" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:padding="10dp"
+                        android:src="@drawable/buds" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:padding="10dp"
+                        android:src="@drawable/tab" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:padding="10dp"
+                        android:src="@drawable/mobilephones" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:padding="10dp"
+                        android:src="@drawable/electronicaccessories" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:textColor="#3041A1"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:text="See All Deals"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="#5C777575" />
+
+            <TextView
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Top deals on home, Kitchen &amp; more"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/top_deals_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                tools:listitem="@layout/top_deals_item"/>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
