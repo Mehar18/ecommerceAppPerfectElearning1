@@ -1,22 +1,23 @@
 package com.example.e_commerce
 
+import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
+import com.example.e_commerce.data.PrefManager
 import com.example.e_commerce.databinding.ActivityMainBinding
 import com.example.e_commerce.ui.cart.CartFragment
 import com.example.e_commerce.ui.home.HomeFragment
+import com.example.e_commerce.ui.login.LoginActivity
 import com.example.e_commerce.ui.menu.MenuFragment
 import com.example.e_commerce.ui.profile.ProfileFragment
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var prefManager: PrefManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +25,16 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        loadFragment(HomeFragment())
+        prefManager = PrefManager(this)
+
+        if (prefManager.isLogin()) {
+            loadFragment(HomeFragment())
+        }else{
+            val progressDialog = ProgressDialog(this)
+            progressDialog.setTitle("Redirecting To login page")
+            progressDialog.show()
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
         binding.navView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_home -> {

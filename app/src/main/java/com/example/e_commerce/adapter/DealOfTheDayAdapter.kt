@@ -11,7 +11,7 @@ import com.example.e_commerce.R
 import com.example.e_commerce.data.DealsOfTheDayData
 import com.example.e_commerce.data.ItemListDataClass
 
-class DealOfTheDayAdapter(private val list: ArrayList<DealsOfTheDayData>):RecyclerView.Adapter<DealOfTheDayAdapter.ItemViewHolder>() {
+class DealOfTheDayAdapter(private val list: ArrayList<DealsOfTheDayData>, private val listener:OnItemClick):RecyclerView.Adapter<DealOfTheDayAdapter.ItemViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -31,9 +31,22 @@ class DealOfTheDayAdapter(private val list: ArrayList<DealsOfTheDayData>):Recycl
     }
 
 
-    class ItemViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView) {
+    inner class ItemViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView),View.OnClickListener {
         val imageView:ImageView = itemView.findViewById(R.id.deals_image)
         val imageType:TextView = itemView.findViewById(R.id.deals_type)
 
+        init {
+            itemView.setOnClickListener(this)
+        }
+        override fun onClick(v: View?) {
+            val position =adapterPosition
+            if (position != RecyclerView.NO_POSITION){
+                listener.onClickItem(position)
+            }
+        }
+
+    }
+    interface OnItemClick {
+        fun onClickItem(position:Int)
     }
 }

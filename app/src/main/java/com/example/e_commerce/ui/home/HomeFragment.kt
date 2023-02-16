@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -22,8 +22,9 @@ import com.example.e_commerce.adapter.TopDealAdapter
 import com.example.e_commerce.data.DealsOfTheDayData
 import com.example.e_commerce.data.ItemListDataClass
 import com.example.e_commerce.databinding.FragmentHomeBinding
+import com.example.e_commerce.ui.deals.DealsFragment
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(),DealOfTheDayAdapter.OnItemClick {
 
     private var _binding: FragmentHomeBinding? = null
     private val list: ArrayList<ItemListDataClass> = ArrayList()
@@ -38,7 +39,7 @@ class HomeFragment : Fragment() {
     private var imageIds =
         intArrayOf(R.drawable.viewpager1, R.drawable.viewpager2, R.drawable.viewpager3)
     private var currentPage = 0
-    private val handler = Handler()
+    private val handler = Handler(Looper.getMainLooper())
 
 private val autoSlide: Runnable = object : Runnable {
     override fun run() {
@@ -72,7 +73,7 @@ private val autoSlide: Runnable = object : Runnable {
         Log.d("list", list.toString())
 
         dataDeals()
-        binding.dealOfTheDayRecyclerview.adapter = DealOfTheDayAdapter(listDeals)
+        binding.dealOfTheDayRecyclerview.adapter = DealOfTheDayAdapter(listDeals,this)
         binding.dealOfTheDayRecyclerview.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.dealOfTheDayRecyclerview.setHasFixedSize(true)
@@ -84,6 +85,7 @@ private val autoSlide: Runnable = object : Runnable {
             GridLayoutManager(requireContext(), 2)
         binding.topDealsRecyclerView.setHasFixedSize(true)
 
+        binding.deliverToName.text = getString(R.string.deliver,homeViewModel.username)
 
 
         return root
@@ -142,8 +144,8 @@ private val autoSlide: Runnable = object : Runnable {
         listDeals.add(DealsOfTheDayData(R.drawable.mobilephones, "Best selling Mobile"))
         listDeals.add(DealsOfTheDayData(R.drawable.electronicaccessories, "Handpicked high performance"))
 
-
     }
+
     private fun topDeals(){
         topDeals.add(DealsOfTheDayData(R.drawable.topdeals1,"Home & Kitchen"))
         topDeals.add(DealsOfTheDayData(R.drawable.topdeals2,"Clothing & Accessories"))
@@ -174,5 +176,18 @@ private val autoSlide: Runnable = object : Runnable {
             return view === `object`
         }
 
+    }
+    private fun loadFragment(fragment: Fragment) {
+            val manager = (requireContext() as AppCompatActivity).supportFragmentManager
+        manager.beginTransaction().apply {
+            replace(R.id.frame_layout,fragment)
+            commit()
+        }
+        }
+
+
+    override fun onClickItem(position: Int) {
+            val fragment = DealsFragment()
+        loadFragment(fragment)
     }
 }

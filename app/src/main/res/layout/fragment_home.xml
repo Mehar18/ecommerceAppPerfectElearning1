@@ -39,11 +39,12 @@
                     android:src="@drawable/baseline_location_on_24" />
 
                 <TextView
+                    android:id="@+id/deliver_to_name"
                     style="@style/ShapeAppearance.Material3.Corner.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:text="Deliver to sahil - Nagpur 440002"
+                    android:text="@string/deliver"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
             </LinearLayout>

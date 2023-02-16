@@ -5,9 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.e_commerce.R
 import com.example.e_commerce.databinding.FragmentProfileBinding
+import com.example.e_commerce.ui.cart.CartFragment
+import com.example.e_commerce.ui.myorder.MyOrderFragment
+import com.google.firebase.auth.FirebaseAuth
 
 class ProfileFragment : Fragment() {
 
@@ -28,15 +33,32 @@ class ProfileFragment : Fragment() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textDashboard
-        profileViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        binding.nameProfile.text = profileViewModel.username
+        binding.emailProfile.text = profileViewModel.email
+
+        binding.myCartProfile.setOnClickListener {
+            val fragment = CartFragment()
+            loadFragment(fragment)
         }
+
+        binding.myOrdersProile.setOnClickListener {
+            val fragment = MyOrderFragment()
+            loadFragment(fragment)
+        }
+
         return root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun loadFragment(fragment: Fragment) {
+        val manager = (requireContext() as AppCompatActivity).supportFragmentManager
+        manager.beginTransaction().apply {
+            replace(R.id.frame_layout, fragment)
+            commit()
+        }
     }
 }

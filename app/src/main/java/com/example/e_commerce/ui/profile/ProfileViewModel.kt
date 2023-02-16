@@ -3,11 +3,15 @@ package com.example.e_commerce.ui.profile
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseAuth
 
 class ProfileViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is Profile Fragment"
-    }
-    val text: LiveData<String> = _text
+
+    private val currentUser = FirebaseAuth.getInstance().currentUser
+
+
+    val email = currentUser!!.email
+    val username = currentUser!!.displayName
+
 }
