@@ -19,6 +19,8 @@ class MyCartAdapter(private val list:ArrayList<DealItem>):RecyclerView.Adapter<M
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
         val current = list[position]
         val number = position+1
+
+
         holder.serialNumer.text = number.toString()
         holder.name.text = current.name
         holder.price.text = "\u20B9 ${current.price}"

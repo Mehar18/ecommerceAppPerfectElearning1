@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.e_commerce.R
 import com.example.e_commerce.data.PrefManager
 import com.example.e_commerce.databinding.FragmentMenuBinding
 import com.example.e_commerce.databinding.FragmentProfileBinding
-import com.example.e_commerce.ui.login.LoginActivity
+import com.example.e_commerce.ui.home.HomeFragment
 import com.google.firebase.auth.FirebaseAuth
 
 class MenuFragment : Fragment() {
@@ -41,14 +43,25 @@ class MenuFragment : Fragment() {
         binding.logOut.setOnClickListener {
             firebaseAuth.signOut()
             prefManager.setLogin(false)
-            startActivity(Intent(requireContext(),LoginActivity::class.java))
+            loadFragment(HomeFragment())
+
+
         }
-        binding.usernameCurrent.text = user!!.displayName
+        if (prefManager.isLogin()) {
+            binding.usernameCurrent.text = user!!.displayName
+        }
         return root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+    private fun loadFragment(fragment: Fragment) {
+        val manager = (requireContext() as AppCompatActivity).supportFragmentManager
+        manager.beginTransaction().apply {
+            replace(R.id.frame_layout,fragment)
+            commit()
+        }
     }
 }

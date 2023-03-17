@@ -17,7 +17,7 @@ class HomeViewModel : ViewModel() {
 
     private val currentUser = FirebaseAuth.getInstance().currentUser
 
-    val username = currentUser!!.displayName
+//    val username = currentUser!!.displayName
 
 
 

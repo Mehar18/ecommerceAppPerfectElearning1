@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.e_commerce.R
 import com.example.e_commerce.adapter.MyCartAdapter
 import com.example.e_commerce.data.DealItem
+import com.example.e_commerce.data.PrefManager
 import com.example.e_commerce.ui.home.HomeFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -30,6 +31,7 @@ class CartFragment : Fragment() {
     lateinit var mAdapter: MyCartAdapter
     lateinit var priceTV: TextView
     lateinit var recyclerView: RecyclerView
+    lateinit var prefManager: PrefManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,7 +45,7 @@ class CartFragment : Fragment() {
         val placedOrder: Button = mView.findViewById(R.id.place_order)
         placedOrder.setOnClickListener {
             getDataToPlaceOrder()
-            val fragment = HomeFragment()
+            val fragment = OrderPlaced()
             loadFragment(fragment)
         }
 
@@ -54,7 +56,10 @@ class CartFragment : Fragment() {
             LinearLayoutManager(mView.context, LinearLayoutManager.VERTICAL, false)
         recyclerView.setHasFixedSize(true)
 
-        getData()
+        prefManager = PrefManager(requireContext())
+
+
+                getData()
 
 
 
@@ -64,7 +69,7 @@ class CartFragment : Fragment() {
     private fun getData() {
         val currentUser = FirebaseAuth.getInstance().currentUser
         val userRef =
-            FirebaseDatabase.getInstance().reference.child("Users").child(currentUser!!.uid)
+            FirebaseDatabase.getInstance().reference.child("Users").child(currentUser!!.displayName!!)
                 .child("Cart Item")
         userRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -81,6 +86,7 @@ class CartFragment : Fragment() {
                         itemPrice = cartData.price
                         price += cartData.price
                         list.add(DealItem(itemImage, itemName, itemPrice))
+                       // Log.d("list",list.toString())
 
                     }
                     priceTV.text = "\u20B9 $price"

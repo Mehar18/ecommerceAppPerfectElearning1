@@ -46,7 +46,7 @@ class DetailedItemFragment : Fragment() {
 
         val itemPrice: TextView = mView.findViewById(R.id.detailed_item_price)
         itemPrice.text = "\u20B9 $price"
-        val databaseReference = FirebaseDatabase.getInstance().reference.child("Users").child(currentUser!!.uid)
+        val databaseReference = FirebaseDatabase.getInstance().reference.child("Users").child(currentUser!!.displayName!!)
         val addToCart:Button = mView.findViewById(R.id.detailed_add_to_cart)
         addToCart.setOnClickListener {
             val data = DealItem(image.toInt(),name!!,price!!.toInt())
@@ -57,6 +57,25 @@ class DetailedItemFragment : Fragment() {
                 .addOnFailureListener {
                     Toast.makeText(mView.context,"Please Try Again",Toast.LENGTH_SHORT).show()
                 }
+
+
+
+            val fragment = CartFragment()
+            loadFragment(fragment)
+        }
+
+        val buyNowButton:Button = mView.findViewById(R.id.buyNow)
+        buyNowButton.setOnClickListener {
+            val data = DealItem(image.toInt(),name!!,price!!.toInt())
+            databaseReference.child("Cart Item").child(name).setValue(data)
+                .addOnSuccessListener {
+                    Toast.makeText(mView.context,"Added To cart",Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(mView.context,"Please Try Again",Toast.LENGTH_SHORT).show()
+                }
+
+
 
             val fragment = CartFragment()
             loadFragment(fragment)

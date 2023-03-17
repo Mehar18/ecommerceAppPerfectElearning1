@@ -9,9 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.e_commerce.MainActivity
 import com.example.e_commerce.R
 import com.example.e_commerce.data.PrefManager
+import com.example.e_commerce.ui.profile.ProfileFragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
@@ -64,12 +66,15 @@ class SignupFragment : Fragment() {
                                         Log.d("Firebase", "User profile update failed.")
                                     }
                                 }
-                            startActivity(Intent(requireContext(), MainActivity::class.java))
-                            prefManager.setLogin(true)
+                           // startActivity(Intent(requireContext(), MainActivity::class.java))
+
+//                            prefManager.setLogin(true)
 
                         } else {
                             // Sign up failed
                         }
+                        loadFragment(ProfileFragment())
+                        prefManager.setLogin(true)
                     }
             }else{
                 Toast.makeText(requireContext(),"Password not matched",Toast.LENGTH_SHORT).show()
@@ -77,6 +82,14 @@ class SignupFragment : Fragment() {
         }
 
         return mView
+    }
+
+    private fun loadFragment(fragment: Fragment) {
+        val manager = (requireContext() as AppCompatActivity).supportFragmentManager
+        manager.beginTransaction().apply {
+            replace(R.id.frame_layout,fragment)
+            commit()
+        }
     }
 
 

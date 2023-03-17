@@ -21,8 +21,11 @@ import com.example.e_commerce.adapter.ItemRecyclerAdapter
 import com.example.e_commerce.adapter.TopDealAdapter
 import com.example.e_commerce.data.DealsOfTheDayData
 import com.example.e_commerce.data.ItemListDataClass
+import com.example.e_commerce.data.PrefManager
 import com.example.e_commerce.databinding.FragmentHomeBinding
 import com.example.e_commerce.ui.deals.DealsFragment
+import com.example.e_commerce.ui.profile.ProfileViewModel
+import com.google.firebase.auth.FirebaseAuth
 
 class HomeFragment : Fragment(),DealOfTheDayAdapter.OnItemClick {
 
@@ -30,6 +33,7 @@ class HomeFragment : Fragment(),DealOfTheDayAdapter.OnItemClick {
     private val list: ArrayList<ItemListDataClass> = ArrayList()
     private val listDeals: ArrayList<DealsOfTheDayData> = ArrayList()
     private val topDeals:ArrayList<DealsOfTheDayData> = ArrayList()
+    private lateinit var prefManager: PrefManager
 
 
 
@@ -84,8 +88,15 @@ private val autoSlide: Runnable = object : Runnable {
         binding.topDealsRecyclerView.layoutManager =
             GridLayoutManager(requireContext(), 2)
         binding.topDealsRecyclerView.setHasFixedSize(true)
+        prefManager = PrefManager(requireContext())
 
-        binding.deliverToName.text = getString(R.string.deliver,homeViewModel.username)
+        if (prefManager.isLogin()) {
+            val currentUser = FirebaseAuth.getInstance().currentUser
+//            val userName = currentUser!!.displayName
+ //           binding.deliverToName.text = getString(R.string.deliver, userName)
+        }
+
+
 
 
         return root

@@ -10,7 +10,7 @@ import com.example.e_commerce.data.PrefManager
 import com.example.e_commerce.databinding.ActivityMainBinding
 import com.example.e_commerce.ui.cart.CartFragment
 import com.example.e_commerce.ui.home.HomeFragment
-import com.example.e_commerce.ui.login.LoginActivity
+import com.example.e_commerce.ui.login.ProfileBeforeLogin
 import com.example.e_commerce.ui.menu.MenuFragment
 import com.example.e_commerce.ui.profile.ProfileFragment
 
@@ -26,15 +26,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         prefManager = PrefManager(this)
+        loadFragment(HomeFragment())
 
-        if (prefManager.isLogin()) {
-            loadFragment(HomeFragment())
-        }else{
-            val progressDialog = ProgressDialog(this)
-            progressDialog.setTitle("Redirecting To login page")
-            progressDialog.show()
-            startActivity(Intent(this, LoginActivity::class.java))
-        }
+
+//        if (prefManager.isLogin()) {
+//            loadFragment(HomeFragment())
+//        }else{
+//            val progressDialog = ProgressDialog(this)
+//            progressDialog.setTitle("Redirecting To login page")
+//            progressDialog.show()
+//            startActivity(Intent(this, LoginActivity::class.java))
+//        }
         binding.navView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_home -> {
@@ -42,7 +44,11 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_profile -> {
-                    loadFragment(ProfileFragment())
+                  //  if (prefManager.isLogin()){
+                        loadFragment(ProfileFragment())
+                  //  }else{
+                    //    loadFragment(ProfileBeforeLogin())
+                  //  }
                     true
                 }
                 R.id.navigation_cart -> {

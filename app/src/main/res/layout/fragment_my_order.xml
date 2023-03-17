@@ -43,6 +43,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
+        android:id="@+id/myOrdersRecyclerView"
         app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
         android:layout_marginTop="25dp"
         android:layout_marginStart="15dp"

@@ -2,35 +2,31 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="10dp"
     android:layout_height="wrap_content">
-    
-    <TextView
-        android:id="@+id/order_count"
-        android:layout_width="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        style="@style/TextAppearance.MaterialComponents.Subtitle2"
-        android:layout_height="wrap_content"/>
-    
-    <TextView
-        android:id="@+id/order_name"
-        android:layout_width="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/order_count"
-        android:layout_marginStart="15dp"
-        style="@style/TextAppearance.MaterialComponents.Subtitle2"
-        app:layout_constraintTop_toTopOf="@id/order_count"
-        app:layout_constraintBottom_toBottomOf="@id/order_count"
-        android:layout_height="wrap_content"/>
 
     <TextView
-        android:id="@+id/order_price"
-        android:layout_width="wrap_content"
+        android:id="@+id/orderSummary"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/order_count"
-        style="@style/TextAppearance.MaterialComponents.Subtitle2"
-        app:layout_constraintBottom_toBottomOf="@id/order_count"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Order Summary"
+        style="@style/TextAppearance.MaterialComponents.Headline6"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/myOrder_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/orderSummary"
+        android:layout_marginTop="15dp"
+        tools:listitem="@layout/my_orders_list"/>
+
+    <View
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/myOrder_recycler_view"
+        android:background="@color/black"
+        android:layout_height="1dp"/>
     
     
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,10 +5,28 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.e_commerce.R
+import com.example.e_commerce.adapter.MyCartAdapter
+import com.example.e_commerce.adapter.MyOrdersAdapter
+import com.example.e_commerce.data.DealItem
+import com.example.e_commerce.data.MyOrderItem
+import com.example.e_commerce.data.PrefManager
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 
 class MyOrderFragment : Fragment() {
+
+    private val myOrdersList: ArrayList<MyOrderItem> = ArrayList()
+
+    lateinit var mAdapter: MyOrdersAdapter
+    lateinit var recyclerView: RecyclerView
+    lateinit var prefManager: PrefManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,10 +41,69 @@ class MyOrderFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_my_order, container, false)
 
+        recyclerView = view.findViewById(R.id.myOrdersRecyclerView)
+        mAdapter = MyOrdersAdapter(myOrdersList)
+        recyclerView.adapter=mAdapter
+        recyclerView.layoutManager = LinearLayoutManager(view.context,
+        LinearLayoutManager.VERTICAL,false)
+        recyclerView.setHasFixedSize(true)
+
+        prefManager = PrefManager(requireContext())
+
+        if (prefManager.isLogin()){
+            getData()
+        }
+
+
+
+
+
+
+
         return view
     }
 
-    companion object {
+    private fun getData() {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val userRef =
+            FirebaseDatabase.getInstance().reference.child("Users").child(currentUser!!.uid)
+                .child("My Order")
+        userRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                if (snapshot.exists()) {
+                    var itemImage: Int
+                    var itemName: String
+                    var itemPrice: Int
+                    var price = 0
+                    for (snap in snapshot.children) {
+                        val myOrderData = snap.getValue(MyOrderItem::class.java)
+                        itemImage = myOrderData?.image!!
+                        itemName = myOrderData.name
+                        itemPrice = myOrderData.price
+                        price += myOrderData.price
+                        myOrdersList.add(MyOrderItem(itemImage, itemName, itemPrice))
+
+                    }
+                   // priceTV.text = "\u20B9 $price"
+                    mAdapter = MyOrdersAdapter(myOrdersList)
+                    recyclerView.adapter = mAdapter
+
+
+                }
+
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
 
     }
+
+
+
+
 }
