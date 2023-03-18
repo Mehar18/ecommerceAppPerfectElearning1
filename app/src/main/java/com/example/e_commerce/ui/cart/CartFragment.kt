@@ -56,11 +56,8 @@ class CartFragment : Fragment() {
             LinearLayoutManager(mView.context, LinearLayoutManager.VERTICAL, false)
         recyclerView.setHasFixedSize(true)
 
-        prefManager = PrefManager(requireContext())
-
-
-                getData()
-
+       prefManager = PrefManager(requireContext())
+        getData()
 
 
         return mView

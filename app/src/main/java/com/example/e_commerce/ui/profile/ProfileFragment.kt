@@ -55,15 +55,15 @@ class ProfileFragment : Fragment() {
 //        binding.nameProfile.text = userName
 //        binding.emailProfile.text = userEmail
 //
-//        binding.myCartProfile.setOnClickListener {
-//            val fragment = CartFragment()
-//            loadFragment(fragment)
-//        }
-//
-//        binding.myOrdersProile.setOnClickListener {
-//            val fragment = MyOrderFragment()
-//            loadFragment(fragment)
-//        }
+        binding.myCartProfile.setOnClickListener {
+            val fragment = CartFragment()
+            loadFragment(fragment)
+        }
+
+        binding.myOrdersProile.setOnClickListener {
+            val fragment = MyOrderFragment()
+            loadFragment(fragment)
+        }
 
 
 

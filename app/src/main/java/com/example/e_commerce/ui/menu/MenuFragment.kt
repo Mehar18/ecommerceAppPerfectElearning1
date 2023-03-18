@@ -48,7 +48,7 @@ class MenuFragment : Fragment() {
 
         }
         if (prefManager.isLogin()) {
-            binding.usernameCurrent.text = user!!.displayName
+//            binding.usernameCurrent.text = user!!.displayName
         }
         return root
     }
